@@ -1,15 +1,15 @@
 import pygame
 
-from NormalMode.hexagon import Hexagon
+from hexagon import Hexagon
 from image import load
-from NormalMode.settings import LANE_VEL, LANE_SIZES
+from settings import LANE_VEL
 
 
 class Lane:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.image = load("Assets/floor1.png",size = LANE_SIZES)
+        self.image = load("Assets/floor1.png")
         self.rec = self.image.get_rect(topleft=(self.x, self.y))
 
     def draw_lane(self, surface):

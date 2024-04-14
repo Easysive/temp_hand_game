@@ -1,5 +1,5 @@
-from NormalMode.image import load
-from NormalMode.settings import *
+from image import load
+from settings import *
 
 
 class Hexagon:
@@ -7,7 +7,7 @@ class Hexagon:
         self.x = x
         self.y = y
         self.status = 0
-        self.image = load("Assets/hexagon.png",size=HEXAGON_SIZES)
+        self.image = load("Assets/hexagon.png")
         self.rect = self.image.get_rect(topleft=(self.x, self.y + HEXAGON_INDEX))
 
     def draw_hexagon(self, surface):

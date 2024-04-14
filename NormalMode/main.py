@@ -3,7 +3,8 @@ import pygame
 import sys
 import os
 
-from NormalMode.lane import Lane
+from drag import Drag
+from lane import Lane
 from enemy import Enemy, EnemyHandle
 from settings import *
 from scroll_bar import *
@@ -54,21 +55,26 @@ lane.append(Lane(LANE_X, LANE_Y + LANE_VEL * 2))
 
 enemy = Enemy()
 enemy_handle = EnemyHandle()
-
+hand = Hand()
+drag = Drag()
 # Loop ------------------------------------------------------------ #
 while True:
     user_events()
 
-    SCREEN.fill((255, 255, 255))
+    SCREEN.fill((0, 0, 0))
 
     # draw lane
     lane[0].draw_lane(SCREEN)
     lane[1].draw_lane(SCREEN)
     lane[2].draw_lane(SCREEN)
-    scroll_bar.update(SCREEN, enemy_handle)
-    game.update()
+    scroll_bar.update(SCREEN, enemy_handle, hand,game)
     enemy_handle.update(SCREEN)
+    for card in scroll_bar.card_list:
+        card.draw(SCREEN, scroll_bar.scroll_rect)
+    # game.update()
+
     # 更新滚动条
+    # drag.update(hand)
 
     update()
 
