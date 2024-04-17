@@ -76,7 +76,6 @@ while True:
     # game.update(scroll_bar.card_list, ball, SCREEN)
     # 更新滚动条
     update()
-
     # 更新屏幕显示
     pygame.display.flip()
     # FPS

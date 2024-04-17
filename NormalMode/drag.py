@@ -27,6 +27,7 @@ class Drag:
                         # 如果手闭合且卡片与手重叠，更新卡片位置为手的位置
                         card.card_rect.center = hand.rect.center
                         card.move = True  # 标记卡片为移动状态
+                        card.is_drag = True
             if hand_tracking.two_fingers_up:
                 # print("拖动")
                 # 遍历所有卡片，检查是否与手的位置重叠
@@ -35,6 +36,7 @@ class Drag:
                         # 如果手闭合且卡片与手重叠，更新卡片位置为手的位置
                         card.card_rect.center = hand.rect.center
                         card.move = True  # 标记卡片为移动状态
+                        card.is_drag = True
             if hand_tracking.six:
                 # print("拖动")
                 # 遍历所有卡片，检查是否与手的位置重叠
@@ -43,6 +45,7 @@ class Drag:
                         # 如果手闭合且卡片与手重叠，更新卡片位置为手的位置
                         card.card_rect.center = hand.rect.center
                         card.move = True  # 标记卡片为移动状态
+                        card.is_drag = True
             if hand_tracking.finger_up:
                 # print("拖动")
                 # 遍历所有卡片，检查是否与手的位置重叠
@@ -51,9 +54,11 @@ class Drag:
                         # 如果手闭合且卡片与手重叠，更新卡片位置为手的位置
                         card.card_rect.center = hand.rect.center
                         card.move = True  # 标记卡片为移动状态
+                        card.is_drag = True
         else:
             # 如果手不是闭合状态，释放所有正在移动的卡片
             for card in card_list:
+                card.is_drag = False
                 if card.move:
                     # 检查卡片是否与(200, 155)点碰撞
                     if card.rect.collidepoint((230, 230)):

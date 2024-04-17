@@ -15,7 +15,7 @@ ANIMATION_SPEED 动画的速度
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.enemy_speed = 1
+        self.enemy_speed = 5
         self.enemy_animation_index = 0
         self.state = True
         # 正向动画
@@ -48,6 +48,7 @@ class Enemy(pygame.sprite.Sprite):
         """
         if self.rect.x <= 100:
             self.state = False
+            return True
 
     def enemy_move_left(self):
         """
@@ -115,7 +116,7 @@ class EnemyHandle(pygame.sprite.Sprite):
         self.enemy_list = pygame.sprite.Group()
         self.scrollBar = ScrollBar()
         # 随机数规定敌人的总数
-        self.enemy_total = (self.scrollBar.fire_num+self.scrollBar.golden_num/2)*random.uniform(0.8,0.9)
+        self.enemy_total = int((self.scrollBar.fire_num+self.scrollBar.golden_num/2)*random.uniform(0.8,0.9))
 
         self.collision = Collision()
 
@@ -140,7 +141,7 @@ class EnemyHandle(pygame.sprite.Sprite):
         :return:
         """
         current_time = pygame.time.get_ticks()
-        if self.enemy_number <= self.enemy_total and current_time - self.last_appear_time >= self.enemy_interval:
+        if self.enemy_total > 0 and current_time - self.last_appear_time >= self.enemy_interval:
             self.last_appear_time = current_time
             self.add_enemy(Enemy())
 
@@ -156,7 +157,7 @@ class EnemyHandle(pygame.sprite.Sprite):
                 if enemy_item.rect.colliderect(enemy.rect):
                     enemy.rect.x = enemy_item.rect.x + 170
                     break
-        self.enemy_number += 1
+        self.enemy_total -= 1
         self.enemy_list.add(enemy)
         self.enemy_interval = random.randint(1000, self.enemy_appear_speed)
 
@@ -188,3 +189,9 @@ class EnemyHandle(pygame.sprite.Sprite):
         collision.Collision.enemy_turned(self.collision,self.enemy_list)
         for enemy in self.enemy_list:
             self.remove_enemy(enemy)
+            if enemy.cross_line():
+                print("敌人越过了线")
+                #TODO 游戏结束
+        if len(self.enemy_list) == 0 and self.enemy_total == 0:
+            print("游戏胜利")
+            # TODO 游戏结束
